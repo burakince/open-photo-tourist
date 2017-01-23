@@ -31,6 +31,16 @@ module OpenPhotoTourist
 
     Mongoid.load!('./config/mongoid.yml')
 
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins 'burakince.net'
+
+        resource '/api/*', 
+          :headers => :any, 
+          :methods => [:get, :post, :put, :delete, :options]
+      end
+    end
+
     #which default ORM are we using with scaffold
     #add  --orm mongoid, or active_record 
     #    to rails generate cmd line to be specific
